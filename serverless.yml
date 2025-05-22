@@ -12,14 +12,14 @@ provider:
 functions:
   hello:
     name: ${env:FUNC_PREFIX}-hello
-    handler: handler.hello
+    handler: app.handlers.product_handler.hello
     events:
       - httpApi:
           path: /
           method: get
   getAllProducts:
     name: ${env:FUNC_PREFIX}-getAllProducts
-    handler: handler.get_all_products
+    handler: app.handlers.product_handler.get_all_products
     events:
       - httpApi:
           path: /products
@@ -27,7 +27,7 @@ functions:
 
   createOneProduct:
     name: ${env:FUNC_PREFIX}-createOneProduct
-    handler: handler.create_one_product
+    handler: app.handlers.product_handler.create_one_product
     events:
       - httpApi:
           path: /products
@@ -35,7 +35,7 @@ functions:
 
   getOneProduct:
     name: ${env:FUNC_PREFIX}-getOneProduct
-    handler: handler.get_one_product
+    handler: app.handlers.product_handler.get_one_product
     events:
       - httpApi:
           path: /products/{product_id}
@@ -43,7 +43,7 @@ functions:
 
   deleteOneProduct:
     name: ${env:FUNC_PREFIX}-deleteOneProduct
-    handler: handler.delete_one_product
+    handler: app.handlers.product_handler.delete_one_product
     events:
       - httpApi:
           path: /products/{product_id}
@@ -51,7 +51,7 @@ functions:
   
   updateOneProduct:
     name: ${env:FUNC_PREFIX}-updateOneProduct
-    handler: handler.update_one_product
+    handler: app.handlers.product_handler.update_one_product
     events:
       - httpApi:
           path: /products/{product_id}
@@ -59,7 +59,7 @@ functions:
 
   addStocksToProduct:
     name: ${env:FUNC_PREFIX}-addStocksToProduct
-    handler: handler.add_stocks_to_product
+    handler: app.handlers.product_handler.add_stocks_to_product
     events:
       - httpApi:
           path: /products/{product_id}/stocks
@@ -67,7 +67,7 @@ functions:
 
   batchCreateProducts:
     name: ${env:FUNC_PREFIX}-batchCreateProducts
-    handler: handler.batch_create_products
+    handler: app.handlers.product_handler.batch_create_products
     events:
       - s3:
           bucket: products-s3bucket-mich
@@ -78,7 +78,7 @@ functions:
 
   batchDeleteProducts:
     name: ${env:FUNC_PREFIX}-batchDeleteProducts
-    handler: handler.batch_delete_products
+    handler: app.handlers.product_handler.batch_delete_products
     events:
       - s3:
           bucket: products-s3bucket-mich
@@ -89,7 +89,7 @@ functions:
 
   receiveMessagesFromSqs:
     name: ${env:FUNC_PREFIX}-receiveMessagesFromSqs
-    handler: handler.receive_message_from_sqs
+    handler: app.handlers.product_handler.receive_message_from_sqs
     events:
       - sqs:
           arn:
