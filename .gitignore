@@ -1,4 +1,4 @@
-# Distribution / packaging
+# Python distribution and packaging files
 .Python
 env/
 build/
@@ -16,5 +16,19 @@ var/
 .installed.cfg
 *.egg
 
-# Serverless directories
+# Python cache files
+__pycache__
+
+# Virtual environment directories
+venv~
+venv~/*
+venv
+
+# Serverless framework directories
 .serverless
+
+# Environment variable files
+.env
+*.env
+.env.staging
+.env.local

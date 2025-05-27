@@ -1,0 +1,8 @@
+boto3
+botocore
+requests
+urllib3
+python-dateutil
+pytz
+jsonschema
+aws-lambda-powertools

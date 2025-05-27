@@ -8,11 +8,15 @@ provider:
   runtime: python3.12
   role: arn:aws:iam::874957933250:role/serverless-app-role
   region: us-east-2
+  environment:
+    PRODUCTS_TABLE_NAME: ProductsTable_mich
+
 
 functions:
-  hello:
+  hellseo:
     name: ${env:FUNC_PREFIX}-hello
     handler: app.handlers.product_handler.hello
+    timeout: 30
     events:
       - httpApi:
           path: /
@@ -20,6 +24,7 @@ functions:
   getAllProducts:
     name: ${env:FUNC_PREFIX}-getAllProducts
     handler: app.handlers.product_handler.get_all_products
+    timeout: 30
     events:
       - httpApi:
           path: /products
@@ -28,6 +33,7 @@ functions:
   createOneProduct:
     name: ${env:FUNC_PREFIX}-createOneProduct
     handler: app.handlers.product_handler.create_one_product
+    timeout: 30
     events:
       - httpApi:
           path: /products
@@ -36,6 +42,7 @@ functions:
   getOneProduct:
     name: ${env:FUNC_PREFIX}-getOneProduct
     handler: app.handlers.product_handler.get_one_product
+    timeout: 30
     events:
       - httpApi:
           path: /products/{product_id}
@@ -44,6 +51,7 @@ functions:
   deleteOneProduct:
     name: ${env:FUNC_PREFIX}-deleteOneProduct
     handler: app.handlers.product_handler.delete_one_product
+    timeout: 30
     events:
       - httpApi:
           path: /products/{product_id}
@@ -52,6 +60,7 @@ functions:
   updateOneProduct:
     name: ${env:FUNC_PREFIX}-updateOneProduct
     handler: app.handlers.product_handler.update_one_product
+    timeout: 30
     events:
       - httpApi:
           path: /products/{product_id}
@@ -60,6 +69,7 @@ functions:
   addStocksToProduct:
     name: ${env:FUNC_PREFIX}-addStocksToProduct
     handler: app.handlers.product_handler.add_stocks_to_product
+    timeout: 30
     events:
       - httpApi:
           path: /products/{product_id}/stocks
@@ -68,6 +78,7 @@ functions:
   batchCreateProducts:
     name: ${env:FUNC_PREFIX}-batchCreateProducts
     handler: app.handlers.product_handler.batch_create_products
+    timeout: 30
     events:
       - s3:
           bucket: products-s3bucket-mich
@@ -79,6 +90,7 @@ functions:
   batchDeleteProducts:
     name: ${env:FUNC_PREFIX}-batchDeleteProducts
     handler: app.handlers.product_handler.batch_delete_products
+    timeout: 30
     events:
       - s3:
           bucket: products-s3bucket-mich
@@ -90,6 +102,7 @@ functions:
   receiveMessagesFromSqs:
     name: ${env:FUNC_PREFIX}-receiveMessagesFromSqs
     handler: app.handlers.product_handler.receive_message_from_sqs
+    timeout: 30
     events:
       - sqs:
           arn:
@@ -140,3 +153,19 @@ resources:
         VisibilityTimeout: 120  # Timeout in seconds
         MessageRetentionPeriod: 1209600  # Retain messages for 14 days
 
+package:
+  exclude:
+    - .serverless/**
+    - env/**
+    - build/**
+    - dist/**
+    - "*.egg-info/**"
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin
+
+custom:
+  prune:
+    automatic: true
+    number: 3  # Keep the 3 most recent versions
